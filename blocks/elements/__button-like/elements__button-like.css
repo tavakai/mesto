@@ -1,0 +1,13 @@
+.elements__button-like {
+    width: 20px;
+    height: 18px;
+    padding: 0;
+    margin: 0px 0px 0px 30px;
+    box-sizing: border-box;
+    border: none;
+    background: transparent;
+}
+
+.elements__button-like:focus {
+    outline: none;
+}

@@ -1,0 +1,8 @@
+.elements__button-icon {
+    max-width: 100%;
+    cursor: pointer;
+}
+
+.elements__button-icon:focus {
+    outline: none;
+}

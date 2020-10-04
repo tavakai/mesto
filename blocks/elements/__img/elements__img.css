@@ -1,0 +1,9 @@
+.elements__img {
+    border-radius: 10px 10px 0px 0px;
+}
+
+@media screen and (max-width: 620px) {
+    .elements__img {
+        width: 100%;
+    }
+}

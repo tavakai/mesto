@@ -1,0 +1,6 @@
+@media screen and (max-width: 387px) {
+    .profile__button-edit_icon {
+        width: 7.5px;
+        height: inherit;
+    }
+}
