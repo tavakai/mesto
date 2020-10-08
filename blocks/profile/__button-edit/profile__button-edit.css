@@ -6,10 +6,20 @@
     margin: 19px 0px 0px 17px;
     border-radius: 2px;
     cursor: url('../../../images/cursor.svg'), auto;
+    background-image: url(../../../images/pencil.svg);
+    background-repeat: no-repeat;
+    background-size: 10px;
+    background-position: center;
 }
 
 .profile__button-edit:hover {
     opacity: .6;
+}
+
+@media screen and (max-width: 900px) {
+    .profile__button-edit {
+        margin-right: 10px;
+    }
 }
 
 @media screen and (max-width: 387px) {

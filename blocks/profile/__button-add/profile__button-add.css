@@ -6,6 +6,10 @@
     margin-left: auto;
     border-radius: 2px;
     cursor: url('../../../images/cursor.svg'), auto;
+    background-image: url(../../../images/plus.svg);
+    background-repeat: no-repeat;
+    background-size: 22px;
+    background-position: center;
 }
 
 .profile__button-add:hover {

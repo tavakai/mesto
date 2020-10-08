@@ -1,4 +1,4 @@
-.popup__name {
+.popup__input {
     margin: 54px 0px 0px 0px;
     font-style: normal;
     font-weight: normal;
@@ -11,12 +11,12 @@
     padding: 0px 0px 13px 0px;
 }
 
-.popup__name:focus {
+.popup__input:focus {
     outline: none;
 }
 
 @media screen and (max-width: 620px) {
-    .popup__name {
+    .popup__input {
         width: 238px;
     }
 }

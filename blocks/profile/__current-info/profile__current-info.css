@@ -10,5 +10,7 @@
 @media screen and (max-width: 768px) {
     .profile__current-info {
         margin: 14px 0px 0px 0px;
+        font-size: 14px;
+        line-height: 17px;
     }
 }
