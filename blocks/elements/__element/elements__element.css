@@ -5,13 +5,6 @@
     border-radius: 10px;
 }
 
-@media screen and (max-width: 620px) {
-    .elements__element {
-        width: 80%;
-        max-width: 100%;
-    }
-}
-
 @media screen and (max-width: 450px) {
     .elements__element {
         width: 282px;
