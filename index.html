@@ -24,72 +24,68 @@
       </div>
       <button type="button" class="profile__button-add"></button>
     </section>
-    <section class="elements">
-      <div class="elements__element">
-        <img src="images/kirill-pershin-1088404-unsplash(1).jpg" alt="Карачаевск" class="elements__img" />
-        <div class="elements__content">
-          <h2 class="elements__title">Карачаевск</h2>
-          <button type="button" class="elements__button-like"></button>
-        </div>
-      </div>
-      <div class="elements__element">
-        <img src="images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус" class="elements__img" />
-        <div class="elements__content">
-          <h2 class="elements__title">Гора Эльбрус</h2>
-          <button type="button" class="elements__button-like"></button>
-        </div>
-      </div>
-      <div class="elements__element">
-        <img src="images/kirill-pershin-1556355-unsplash(1).jpg" alt="Домбай" class="elements__img" />
-        <div class="elements__content">
-          <h2 class="elements__title">Домбай</h2>
-          <button type="button" class="elements__button-like"></button>
-        </div>
-      </div>
-      <div class="elements__element">
-        <img src="images/kirill-pershin-1088404-unsplash(1).jpg" alt="Карачаевск" class="elements__img" />
-        <div class="elements__content">
-          <h2 class="elements__title">Карачаево-Черкессияsdfsdf</h2>
-          <button type="button" class="elements__button-like"></button>
-        </div>
-      </div>
-      <div class="elements__element">
-        <img src="images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус" class="elements__img" />
-        <div class="elements__content">
-          <h2 class="elements__title">Гора Эльбрус</h2>
-          <button type="button" class="elements__button-like"></button>
-        </div>
-      </div>
-      <div class="elements__element">
-        <img src="images/kirill-pershin-1556355-unsplash(1).jpg" alt="Домбай" class="elements__img" />
-        <div class="elements__content">
-          <h2 class="elements__title">Домбай</h2>
-          <button type="button" class="elements__button-like"></button>
-        </div>
-      </div>
-    </section>
+    <section class="elements"></section>
   </main>
   <footer class="footer">
     <p class="footer__copyright">© 2020 Mesto Russia</p>
   </footer>
-  <section class="popup">
+  <!--Попап редактирования профиля-->
+  <section class="popup popup_edit">
     <div class="popup__container">
-      <form action="scripts/index.js" name="form-popup" method="get" class="popup__form" id="popup_form">
+      <form action="scripts/index.js" name="form-popup" method="get" class="popup__form popup__form_edit">
         <fieldset class="popup__fieldset">
           <legend>
             <h2 class="popup__title">Редактировать профиль</h2>
           </legend>
-          <input type="text" name="name" id="popup_name" class="popup__input popup__input_value_name" value="" />
-          <input type="text" name="current" id="popup_current" class="popup__input popup__input_value_current"
+          <input type="text" name="name" class="popup__input popup__input_value_name" value="" />
+          <input type="text" name="current" class="popup__input popup__input_value_current"
             value="" />
         </fieldset>
-        <button class="popup__button" type="submit" value="Сохранить" id="popup_button">
+        <button class="popup__button popup__button_edit" type="submit" value="Сохранить">
           Сохранить
         </button>
         <button type="button" class="popup__close"></button>
       </form>
     </div>
   </section>
+  <!--Попап добавления карточек-->
+  <section class="popup popup_add">
+    <div class="popup__container popup__container_width_240">
+      <form action="scripts/index.js" name="form-popup" method="get" class="popup__form popup__form_add">
+        <fieldset class="popup__fieldset popup__fieldset_width_240">
+          <legend>
+            <h2 class="popup__title popup__title_align-left">Новое место</h2>
+          </legend>
+          <input type="text" name="name" class="popup__input popup__input_value_title popup__input_width_200" value="" placeholder="Название" />
+          <input type="text" name="img" class="popup__input popup__input_value_img popup__input_width_200"
+            value="" placeholder="Ссылка на картинку" />
+        </fieldset>
+        <button class="popup__button popup__button_add popup__button_width_200" type="submit" value="Создать">
+          Создать
+        </button>
+        <button type="button" class="popup__close popup__close_btn_newcard"></button>
+      </form>
+    </div>
+  </section>
+  <!--Попап просмотра карточки-->
+  <section class="popup popup_card">
+    <div class="popup__card">
+      <img src="" alt="" class="popup__img-card">
+      <p class="popup__subscribe"></p>
+      <button type="button" class="popup__close"></button>
+    </div>
+  </section>
+  <template class="cards">
+    <div class="elements__element">
+      <img src="" alt="" class="elements__img" />
+      <button class="elements__delete" type="button"></button>
+      <div class="elements__content">
+        <h2 class="elements__title"></h2>
+        <button type="button" class="elements__button-like"></button>
+      </div>
+    </div>
+  </template>
+  <script src="scripts/default.js"></script>
   <script src="scripts/index.js"></script>
 </body>
 

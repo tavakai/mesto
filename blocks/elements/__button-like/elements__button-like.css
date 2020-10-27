@@ -11,6 +11,7 @@
     background-size: 21px 19px;
     background-position: center;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .elements__button-like:focus {
@@ -19,4 +20,5 @@
 
 .elements__button-like:hover {
     transform: scale(1.2);
+    background-image: url(../../../images/like-grey.svg);
 }

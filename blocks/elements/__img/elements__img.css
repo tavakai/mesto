@@ -1,5 +1,8 @@
 .elements__img {
     border-radius: 10px 10px 0px 0px;
+    width: 282px;
+    height: 282px;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 620px) {
