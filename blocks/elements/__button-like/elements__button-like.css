@@ -20,5 +20,4 @@
 
 .elements__button-like:hover {
     transform: scale(1.2);
-    background-image: url(../../../images/like-grey.svg);
 }
