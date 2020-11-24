@@ -1,4 +1,5 @@
 // Popups
+const popups = document.querySelectorAll('.popup');
 const popupEdit = document.querySelector(".popup_edit");
 const popupAdd = document.querySelector(".popup_add");
 const popupCard = document.querySelector(".popup_card");
@@ -179,5 +180,14 @@ popupCard.addEventListener("click", function(event) {
     togglePopup(popupCard);
   }
 });
+
+// Закрытие попапа по клику Escape
+document.addEventListener('keydown', evt => {
+  popups.forEach(pop => {
+    if (evt.code == 'Escape' && pop.classList.contains('popup_opened')) {
+      pop.classList.remove('popup_opened');
+    }
+  })
+})
 
 renderCards();

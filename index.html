@@ -32,15 +32,17 @@
   <!--Попап редактирования профиля-->
   <section class="popup popup_edit">
     <div class="popup__container">
-      <form action="scripts/index.js" name="form-popup" method="get" class="popup__form popup__form_edit">
+      <form action="scripts/index.js" name="form-popup" method="get" class="popup__form popup__form_edit" novalidate>
         <fieldset class="popup__fieldset">
           <legend>
             <h2 class="popup__title">Редактировать профиль</h2>
           </legend>
-          <input type="text" name="name" class="popup__input popup__input_value_name" value="" />
+          <input type="text" name="name" class="popup__input popup__input_value_name" value="" required minlength="2" maxlength="40"/>
+          <span class="popup__message popup__message_name_error" id="name-error"></span>
           <input type="text" name="current" class="popup__input popup__input_value_current"
-            value="" />
-        </fieldset>
+            value="" required minlength="2" maxlength="200"/>
+        <span class="popup__message popup__message_current_error" id="current-error"></span>
+          </fieldset>
         <button class="popup__button popup__button_edit" type="submit" value="Сохранить">
           Сохранить
         </button>
@@ -51,16 +53,18 @@
   <!--Попап добавления карточек-->
   <section class="popup popup_add">
     <div class="popup__container popup__container_width_240">
-      <form action="scripts/index.js" name="form-popup" method="get" class="popup__form popup__form_add">
+      <form action="scripts/index.js" name="form-popup" method="get" class="popup__form popup__form_add" novalidate>
         <fieldset class="popup__fieldset popup__fieldset_width_240">
           <legend>
             <h2 class="popup__title popup__title_align-left">Новое место</h2>
           </legend>
-          <input type="text" name="name" class="popup__input popup__input_value_title popup__input_width_200" value="" placeholder="Название" />
-          <input type="text" name="img" class="popup__input popup__input_value_img popup__input_width_200"
-            value="" placeholder="Ссылка на картинку" />
-        </fieldset>
-        <button class="popup__button popup__button_add popup__button_width_200" type="submit" value="Создать">
+          <input type="text" name="card_title" class="popup__input_invalid popup__input popup__input_value_title popup__input_width_200" value="" required placeholder="Название" minlength="2" maxlength="30"/>
+          <span class="popup__message popup__message_title_error" id="card_title-error"></span>
+          <input type="url" name="card_img_url" class="popup__input popup__input_value_img popup__input_width_200"
+            value="" required placeholder="Ссылка на картинку" />
+        <span class="popup__message popup__message_img_url_error" id="card_img_url-error"></span>
+          </fieldset>
+        <button class="popup__button popup__button_add popup__button_width_200 popup__button_disabled" disabled type="submit" value="Создать">
           Создать
         </button>
         <button type="button" class="popup__close popup__close_btn_newcard"></button>
@@ -86,6 +90,7 @@
     </div>
   </template>
   <script src="scripts/index.js"></script>
+  <script src="scripts/validate.js"></script>
 </body>
 
 </html>
