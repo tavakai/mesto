@@ -4,7 +4,9 @@
     height: 282px;
     cursor: pointer;
 }
-
+.elements__img:hover {
+    opacity: .9;
+}
 @media screen and (max-width: 620px) {
     .elements__img {
         width: 100%;
