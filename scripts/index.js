@@ -103,9 +103,7 @@ const createCard = (data) => {
   });
 
   // Удаление карточки через иконку
-  cardElement
-    .querySelector(".elements__delete")
-    .addEventListener("click", function (evt) {
+  cardElement.querySelector(".elements__delete").addEventListener("click", function (evt) {
       evt.target.closest(".elements__element").remove();
     });
   // Открытие карточки
@@ -123,18 +121,23 @@ const renderCards = () => {
   listCards.append(...items);
 };
 
+// Закрытие попапа по клику Escape
+const toggleEvtEsc = function (evt) {
+  const openedPopup = document.querySelector('.popup_opened');
+  if (evt.code == "Escape") {
+    togglePopup(openedPopup);
+    document.removeEventListener("keydown", toggleEvtEsc);
+  }
+};
 // Открытие/закрытие попапа
 const togglePopup = function (popup) {
   popup.classList.toggle("popup_opened");
-  // Закрытие попапа по клику Escape
-  function toggleEvtEsc(evt) {
-    if (evt.code == "Escape") {
-      popup.classList.remove("popup_opened");
-      document.removeEventListener("keydown", toggleEvtEsc);
-    }
-  }
-  // Обработчик на Escape
-  document.addEventListener("keydown", toggleEvtEsc);
+  if (popup.classList.contains("popup_opened")) {
+    // Обработчик на Escape
+    document.addEventListener("keydown", toggleEvtEsc);
+  } else {
+    resetInputs();
+}
 };
 
 // Прикрепляем обработчик к форме:
@@ -196,14 +199,5 @@ popupCard.addEventListener("click", function (event) {
     togglePopup(popupCard);
   }
 });
-
-// // Закрытие попапа по клику Escape
-// document.addEventListener('keydown', evt => {
-//   popups.forEach(pop => {
-//     if (evt.code == 'Escape' && pop.classList.contains('popup_opened')) {
-//       pop.classList.remove('popup_opened');
-//     }
-//   })
-// })
 
 renderCards();

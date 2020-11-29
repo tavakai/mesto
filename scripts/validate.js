@@ -6,7 +6,13 @@ const validateObj = {
   inputErrorClass: "popup__input_type_error",
   errorClass: "popup__error_visible",
 };
-
+// Очистка полей после закрытия окон
+const resetInputs = function(item,) {
+  const forms = Array.from(document.querySelectorAll(".popup__form"));
+    forms.forEach((form) => {
+      form.reset();
+  });
+}
 // ** Показать ошибку под полем
 const showErrorsText = function (inputAttribute, specialClass, inputError) {
   const visibleErrorMessage = searchErrorMessages(inputAttribute);
