@@ -1,14 +1,14 @@
-.elements__img {
+.card__img {
     border-radius: 10px 10px 0px 0px;
     width: 282px;
     height: 282px;
     cursor: pointer;
 }
-.elements__img:hover {
+.card__img:hover {
     opacity: .9;
 }
 @media screen and (max-width: 620px) {
-    .elements__img {
+    .card__img {
         width: 100%;
     }
 }

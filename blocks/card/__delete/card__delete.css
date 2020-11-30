@@ -1,4 +1,4 @@
-.elements__delete {
+.card__delete {
     width: 18px;
     height: 19.3px;
     padding: 0;
@@ -18,6 +18,6 @@
     outline: none;
 }
 
-.elements__delete:hover {
+.card__delete:hover {
     background-image: url(../../../images/delete-icon-active.svg);
 }

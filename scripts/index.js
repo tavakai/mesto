@@ -33,7 +33,7 @@ const cardTitle = document.querySelector(".popup__input_value_title");
 const linkImg = document.querySelector(".popup__input_value_img");
 
 // Привязка шаблона карточки
-const cardTemplate = document.querySelector(".cards_view-popup").content;
+const cardTemplate = document.querySelector(".card_view-popup").content;
 
 // Элементы открытой карточки
 const cardImgFullScreen = document.querySelector(".popup__img-card");
@@ -47,7 +47,7 @@ const profileDataImpot = function() {
 
 // Функция лайка
 const setLike = function (btnItem) {
-  btnItem.classList.toggle("elements__button-like_active");
+  btnItem.classList.toggle("card__button-like_active");
 };
 
 // Функция открытия карточки
@@ -101,10 +101,10 @@ const initialCards = [
 const createCard = (data) => {
   const cardElement = cardTemplate.cloneNode(true);
 
-  const cardImg = cardElement.querySelector(".elements__img");
-  const cardLikeBtn = cardElement.querySelector(".elements__button-like");
+  const cardImg = cardElement.querySelector(".card__img");
+  const cardLikeBtn = cardElement.querySelector(".card__button-like");
   cardImg.src = data.link;
-  const cardName = (cardElement.querySelector(".elements__title").innerText =
+  const cardName = (cardElement.querySelector(".card__title").innerText =
     data.name);
 
   // Функция лайка карточки
@@ -113,8 +113,8 @@ const createCard = (data) => {
   });
 
   // Удаление карточки через иконку
-  cardElement.querySelector(".elements__delete").addEventListener("click", function (evt) {
-      evt.target.closest(".elements__element").remove();
+  cardElement.querySelector(".card__delete").addEventListener("click", function (evt) {
+      evt.target.closest(".card__element").remove();
     });
   // Открытие карточки
   cardImg.addEventListener("click", function () {

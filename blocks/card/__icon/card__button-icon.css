@@ -1,9 +1,9 @@
-.elements__button-icon {
+.card__button-icon {
     max-width: 100%;
     cursor: pointer;
     vertical-align: middle;
 }
 
-.elements__button-icon:focus {
+.card__button-icon:focus {
     outline: none;
 }
