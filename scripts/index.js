@@ -136,7 +136,6 @@ const toggleEvtEsc = function (evt) {
   const openedPopup = document.querySelector('.popup_opened');
   if (evt.code == "Escape") {
     togglePopup(openedPopup);
-    document.removeEventListener("keydown", toggleEvtEsc);
   }
 };
 // Открытие/закрытие попапа
@@ -148,6 +147,7 @@ const togglePopup = function (popup) {
     profileDataImpot();
   } else {
     resetInputs();
+    document.removeEventListener("keydown", toggleEvtEsc);
 }
 };
 
