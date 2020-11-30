@@ -24,6 +24,10 @@ const listCards = document.querySelector(".elements");
 const formElement = document.querySelector(".popup__form");
 const formCardAdd = document.querySelector(".popup__form_add");
 
+// Все поля форм
+const inputsForms = document.querySelectorAll('.popup__input');
+const inputsMessage = document.querySelectorAll('.popup__message');
+
 // Поля попапа добавления карточки
 const cardTitle = document.querySelector(".popup__input_value_title");
 const linkImg = document.querySelector(".popup__input_value_img");
@@ -34,6 +38,12 @@ const cardTemplate = document.querySelector(".cards_view-popup").content;
 // Элементы открытой карточки
 const cardImgFullScreen = document.querySelector(".popup__img-card");
 const cardSubscribe = document.querySelector(".popup__subscribe");
+
+// Функция занесения данных профиля в попап редактирования
+const profileDataImpot = function() {
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileCurrent.textContent;
+}
 
 // Функция лайка
 const setLike = function (btnItem) {
@@ -135,6 +145,7 @@ const togglePopup = function (popup) {
   if (popup.classList.contains("popup_opened")) {
     // Обработчик на Escape
     document.addEventListener("keydown", toggleEvtEsc);
+    profileDataImpot();
   } else {
     resetInputs();
 }
@@ -162,8 +173,6 @@ formCardAdd.addEventListener("submit", function (evt) {
 
 // Обработчики на открытие попапов редактирования профиля и добавления карточки
 btnEditOpenPopup.addEventListener("click", function () {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileCurrent.textContent;
   togglePopup(popupEdit);
 });
 btnAddOpenPopup.addEventListener("click", function () {

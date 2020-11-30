@@ -6,11 +6,20 @@ const validateObj = {
   inputErrorClass: "popup__input_type_error",
   errorClass: "popup__error_visible",
 };
-// Очистка полей после закрытия окон
-const resetInputs = function(item,) {
+// Очистка полей и ошибок после закрытия окон
+const resetInputs = function() {
   const forms = Array.from(document.querySelectorAll(".popup__form"));
     forms.forEach((form) => {
       form.reset();
+  });
+  const inputsMessages = Array.from(inputsMessage);
+  const inputsAllForms = Array.from(inputsForms);
+
+  inputsMessages.forEach((mess) => {
+    mess.classList.remove(validateObj["errorClass"]);
+  });
+  inputsAllForms.forEach((form) => {
+    form.classList.remove(validateObj["inputErrorClass"]);
   });
 }
 // ** Показать ошибку под полем
