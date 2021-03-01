@@ -2,16 +2,14 @@ import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 
 // Popups
+const popups = document.querySelectorAll(".popup");
 const popupEdit = document.querySelector(".popup_edit");
 const popupAdd = document.querySelector(".popup_add");
+const popupCard = document.querySelector(".popup_card");
 
 // Popups button open
 const btnEditOpenPopup = document.querySelector(".profile__button-edit");
 const btnAddOpenPopup = document.querySelector(".profile__button-add");
-
-// Popups button close
-const btnEditClosePopup = popupEdit.querySelector(".popup__close");
-const btnAddClosePopup = popupAdd.querySelector(".popup__close");
 
 // Свяжем текстовое содержимое полей
 const profileName = document.querySelector(".profile__name");
@@ -26,10 +24,6 @@ const formCardAdd = document.querySelector(".popup__form_add");
 const formEditProfile = document.querySelector(".popup__form_edit");
 const formsList = [formCardAdd, formEditProfile];
 
-// Все поля форм
-const inputsForms = document.querySelectorAll('.popup__input');
-const inputsMessage = document.querySelectorAll('.popup__message');
-
 // Поля попапа добавления карточки
 const cardTitle = document.querySelector(".popup__input_value_title");
 const linkImg = document.querySelector(".popup__input_value_img");
@@ -37,27 +31,14 @@ const linkImg = document.querySelector(".popup__input_value_img");
 // Привязка шаблона карточки
 const cardTemplate = document.querySelector(".card_view-popup");
 
+// Элементы открытой карточки
+const cardImgFullScreen = document.querySelector(".popup__img-card");
+const cardSubscribe = document.querySelector(".popup__subscribe");
+
 // Функция занесения данных профиля в попап редактирования
 const profileDataImpot = function() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileCurrent.textContent;
-}
-
-// Очистка полей и ошибок после закрытия окон
-const resetInputs = function() {
-  const forms = Array.from(document.querySelectorAll(".popup__form"));
-    forms.forEach((form) => {
-      form.reset();
-  });
-  const inputsMessages = Array.from(inputsMessage);
-  const inputsAllForms = Array.from(inputsForms);
-
-  inputsMessages.forEach((mess) => {
-    mess.classList.remove(validateObj["errorClass"]);
-  });
-  inputsAllForms.forEach((form) => {
-    form.classList.remove(validateObj["inputErrorClass"]);
-  });
 }
 
 const validateObj = {
@@ -108,23 +89,11 @@ const initialCards = [
   },
 ];
 
-const cards = initialCards.map(item => {
-  const newCard = new Card(item.name, item.title, item.link, cardTemplate);
-  return newCard.createCard();
-});
-listCards.append(...cards);
-
-formsList.forEach((item) => {
-  const enemyForm = new FormValidator(validateObj, item);
-  return enemyForm.enableValidation(validateObj, item);
-});
-  
-// Закрытие попапа по клику Escape
-const toggleEvtEsc = function (evt) {
-  const openedPopup = document.querySelector('.popup_opened');
-  if (evt.code == "Escape") {
-    togglePopup(openedPopup);
-  }
+// Функция открытия карточки
+const handleCardClick = function (name, src) {
+  cardImgFullScreen.src = src;
+  cardSubscribe.textContent = name;
+  togglePopup(popupCard);
 };
 
 // Открытие/закрытие попапа
@@ -133,12 +102,25 @@ const togglePopup = function (popup) {
   if (popup.classList.contains("popup_opened")) {
     // Обработчик на Escape
     document.addEventListener("keydown", toggleEvtEsc);
-    profileDataImpot();
   } else {
-    resetInputs();
     document.removeEventListener("keydown", toggleEvtEsc);
-}
+  }
 };
+
+// Закрытие попапа по клику Escape
+const toggleEvtEsc = function (evt) {
+  const openedPopup = document.querySelector('.popup_opened');
+  if (evt.code == "Escape") {
+    togglePopup(openedPopup);
+  }
+};
+
+// Генерация стартовых карточек
+const cards = initialCards.map(item => {
+  const newCard = new Card(item, cardTemplate, handleCardClick);
+  return newCard.createCard();
+});
+listCards.append(...cards);
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
@@ -149,46 +131,42 @@ formElement.addEventListener("submit", function (evt) {
   togglePopup(popupEdit);
 });
 
+
 // Добавление карточки через попап
 formCardAdd.addEventListener("submit", function (evt) {
   evt.preventDefault();
-  const item = new Card(
-    cardTitle.value,
-    cardTitle.value,
-    linkImg.value,
-    cardTemplate
-  );
-  cardTitle.value = item.name;
-  linkImg.value = item.link;
-  listCards.prepend(item.createCard());
+  const doNewCardRender = {
+    name: cardTitle.value,
+    link: linkImg.value
+  }
+  const newCard = new Card(doNewCardRender, cardTemplate, handleCardClick);
+  
+  listCards.prepend(newCard.createCard());
   togglePopup(popupAdd);
 });
 
 // Обработчики на открытие попапов редактирования профиля и добавления карточки
 btnEditOpenPopup.addEventListener("click", function () {
+  const resetPopupEdit = new FormValidator(validateObj, formEditProfile);
+  resetPopupEdit.enableValidation();
   togglePopup(popupEdit);
+  profileDataImpot();
 });
+
 btnAddOpenPopup.addEventListener("click", function () {
+  const resetPopupAdd = new FormValidator(validateObj, formCardAdd);
+  resetPopupAdd.enableValidation();
   togglePopup(popupAdd);
 });
 
-// Обработчики на закрытие попапов
-btnEditClosePopup.addEventListener("click", function () {
-  togglePopup(popupEdit);
-});
-
-btnAddClosePopup.addEventListener("click", function () {
-  togglePopup(popupAdd);
-});
-
-// Закрытие попапа по клику на фон
-popupEdit.addEventListener("click", function (event) {
-  if (event.target == event.currentTarget) {
-    togglePopup(popupEdit);
-  }
-});
-popupAdd.addEventListener("click", function (event) {
-  if (event.target == event.currentTarget) {
-    togglePopup(popupAdd);
-  }
+// Обработчки на все попапы (закрытие по крестику и клику на фон 👍)
+popups.forEach((popup) => {
+  popup.addEventListener('click', (evt) => {
+      if (evt.target.classList.contains('popup_opened')) {
+          togglePopup(popup)
+      }
+      if (evt.target.classList.contains('popup__close')) {
+        togglePopup(popup)
+      }
+  })
 });
