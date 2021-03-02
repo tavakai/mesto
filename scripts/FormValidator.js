@@ -6,39 +6,32 @@ export default class FormValidator {
     this._inputErrorClass = validateObject.inputErrorClass;
     this._errorClass = validateObject.errorClass;
     this._formSelector = formSelector;
-    this._inputList = [this._inputSelector];
+    this._inputList = Array.from(this._formSelector.querySelectorAll(this._inputSelector));
+    this._btnForm = this._formSelector.querySelector(this._submitButtonSelector);
   }
 
 enableValidation() {
     // Обработчик события для каждой формы и запрет на submit
     this._formSelector.addEventListener("submit", (evt) => evt.preventDefault());
-
-    // Наложение обработчиков на поля форм
-    this._doInputsValidation(this._formSelector, this._inputSelector, this._errorClass, this._inputErrorClass);
-
-    this._doBtnValidation(
-      this._formSelector,
-      this._inputSelector,
-      this._submitButtonSelector,
-      this._inactiveButtonClass
-    );
-
-    this._resetValidation();
+    // Вызов валидации полей
+    this._doInputsValidation();
+    // Вызов валидации кнопки
+    this._doBtnValidation();
 }
 
 // ** Показать ошибку под полем
-_showErrorsText (inputAttribute, specialClass, inputError) {
+_showErrorsText (inputAttribute) {
   const visibleErrorMessage = this._searchErrorMessages(inputAttribute);
   visibleErrorMessage.textContent = inputAttribute.validationMessage;
-  visibleErrorMessage.classList.add(specialClass);
-  inputAttribute.classList.add(inputError);
+  visibleErrorMessage.classList.add(this._errorClass);
+  inputAttribute.classList.add(this._inputErrorClass);
 };
 // ** Скрыть ошибку под полем
-_hideErrorsText (inputAttribute, specialClass, inputError) {
+_hideErrorsText (inputAttribute) {
   const invisibleErrorMessage = this._searchErrorMessages(inputAttribute);
   invisibleErrorMessage.textContent = inputAttribute.validationMessage;
-  invisibleErrorMessage.classList.remove(specialClass);
-  inputAttribute.classList.remove(inputError);
+  invisibleErrorMessage.classList.remove(this._errorClass);
+  inputAttribute.classList.remove(this._inputErrorClass);
 };
 // ** Поиск переменной содержащее нужное поле ошибки
 _searchErrorMessages(inputAttribute) {
@@ -46,69 +39,46 @@ _searchErrorMessages(inputAttribute) {
   const errorMessage = document.getElementById(`${inputName}-error`);
   return errorMessage;
 }
-
-// ** Валидация кнопки (вынесение в отдельную функцию)
-_doBtnValidation (item, selector, btnClass, removeClass) {
-  const btnForms = item.querySelector(btnClass);
-  const inputs = item.querySelectorAll(selector);
-  const nodesArray = Array.from(inputs);
+// Валидация кнопки
+_doBtnValidation () {
+  const nodesArray = Array.from(this._inputList);
   const checkAvailability = (elem) => elem.validity.valid;
-  btnForms.setAttribute("disabled", "disabled");
-
-  nodesArray.forEach((arr) => {
-    arr.addEventListener("input", () => {
-      if (nodesArray.every(checkAvailability)) {
-        btnForms.classList.remove(removeClass);
-        btnForms.removeAttribute("disabled");
-      } else {
-        btnForms.classList.add(removeClass);
-        btnForms.setAttribute("disabled", "disabled");
-      }
+    this._btnForm.setAttribute("disabled", "disabled");
+    nodesArray.forEach((arr) => {
+      arr.addEventListener("input", () => {
+        if (nodesArray.every(checkAvailability)) {
+          this._btnForm.classList.remove(this._inactiveButtonClass);
+          this._btnForm.removeAttribute("disabled");
+        } else {
+          this._btnForm.classList.add(this._inactiveButtonClass);
+          this._btnForm.setAttribute("disabled", "disabled");
+        }
+      });
     });
-  });
 };
-
-// Очистить все ошибки перед открытием попапа
-_removeErrorsPopup() {
-  const inputList = Array.from(document.querySelectorAll(this._inputSelector));
-  inputList.forEach((element) => {
-    element.classList.remove(this._inputErrorClass);
+// Очистка полей ошибок после закрытия попапа
+resetValidation() {
+  this._formSelector.reset();
+  this._inputList.forEach((element) => {
+    this._hideErrorsText(element);
   });
-  const inputListMessage = Array.from(document.querySelectorAll('.popup__message'));
+  const inputListMessage = Array.from(this._formSelector.querySelectorAll('.popup__message'));
   inputListMessage.forEach((element) => {
     element.classList.remove(this._errorClass);
   })
-
-  const btnList = Array.from(document.querySelectorAll(this._submitButtonSelector));
-  btnList.forEach((element) => {
-    element.classList.add(this._inactiveButtonClass);
-  })
+  this._btnForm.classList.add(this._inactiveButtonClass);
 }
-
-// Очистка полей ошибок после закрытия попапа
-_resetValidation() {
-  const forms = Array.from(document.querySelectorAll(".popup__form"));
-    forms.forEach((form) => {
-      form.reset();
-  });
-  this._removeErrorsPopup();
-}
-
-// Обработчики на поля форм (вынесение в отдельную функцию)
-_doInputsValidation (item,
-  selector,
-  errorSelector,
-  inputErrorClass) {
-    const inputs = item.querySelectorAll(selector);
-    inputs.forEach((input) => {
-      input.addEventListener("input", (evt) => {
+// Обработчики на поля форм
+_doInputsValidation () {
+    this._inputList.forEach((input) => {
+      input.addEventListener("input", () => {
         // ** проверка валидности введенных данных
         if (input.validity.valid) {
           // ** Скрыть ошибку под полем
-          this._hideErrorsText(input, errorSelector, inputErrorClass);
+          this._hideErrorsText(input);
         } else {
           // ** Показать ошибку под полем
-          this._showErrorsText(input, errorSelector, inputErrorClass);
+          this._showErrorsText(input);
         }
       });
     });

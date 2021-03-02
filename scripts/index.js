@@ -22,7 +22,6 @@ const listCards = document.querySelector(".elements");
 const formElement = document.querySelector(".popup__form");
 const formCardAdd = document.querySelector(".popup__form_add");
 const formEditProfile = document.querySelector(".popup__form_edit");
-const formsList = [formCardAdd, formEditProfile];
 
 // Поля попапа добавления карточки
 const cardTitle = document.querySelector(".popup__input_value_title");
@@ -131,7 +130,6 @@ formElement.addEventListener("submit", function (evt) {
   togglePopup(popupEdit);
 });
 
-
 // Добавление карточки через попап
 formCardAdd.addEventListener("submit", function (evt) {
   evt.preventDefault();
@@ -145,17 +143,24 @@ formCardAdd.addEventListener("submit", function (evt) {
   togglePopup(popupAdd);
 });
 
-// Обработчики на открытие попапов редактирования профиля и добавления карточки
-btnEditOpenPopup.addEventListener("click", function () {
-  const resetPopupEdit = new FormValidator(validateObj, formEditProfile);
+// Создание экземпляра формы для валидации
+const resetPopupEdit = new FormValidator(validateObj, formEditProfile);
   resetPopupEdit.enableValidation();
+
+// Открытие попапа редактирования профиля
+btnEditOpenPopup.addEventListener("click", function () {
+  resetPopupEdit.resetValidation(); // Вызов метода очисти полей и ошибок
   togglePopup(popupEdit);
   profileDataImpot();
 });
 
-btnAddOpenPopup.addEventListener("click", function () {
-  const resetPopupAdd = new FormValidator(validateObj, formCardAdd);
+// Создание экземпляра формы для валидации
+const resetPopupAdd = new FormValidator(validateObj, formCardAdd);
   resetPopupAdd.enableValidation();
+
+// Открытие попапа создания новой карточки
+btnAddOpenPopup.addEventListener("click", function () {
+  resetPopupAdd.resetValidation(); // Вызов метода очисти полей и ошибок
   togglePopup(popupAdd);
 });
 
