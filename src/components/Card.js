@@ -1,5 +1,4 @@
 export default class Card {
-
   constructor(data, cardSelector, handleCardClick) {
     this._name = data.name;
     this._alt = data.name;
@@ -23,7 +22,7 @@ export default class Card {
   }
 
   // Слушатель для лайка, удаления и клика на карточку
-  _setEventListeners(){
+  _setEventListeners() {
     // Слушатель для лайка карточки
     this._cardLikeBtn.addEventListener("click", () => {
       this._setLike(this._cardLikeBtn);
@@ -39,7 +38,7 @@ export default class Card {
       this._handleCardClick(this._name, this._src);
     });
   }
-  
+
   // Метод лайка
   _setLike(item) {
     item.classList.toggle("card__button-like_active");
@@ -50,4 +49,3 @@ export default class Card {
     item.remove();
   }
 }
-
