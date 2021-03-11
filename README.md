@@ -14,7 +14,7 @@
 
 **Ссылка на проект**
 
-- [Ссылка на проект](https://tavakai.github.io/mesto/index.html)
+- [Ссылка на проект](https://tavakai.github.io/mesto/src/index.html)
 
 **Бесплатные фото**
 
