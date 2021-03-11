@@ -15,6 +15,7 @@ export default class Card {
     this._cardDeleteIcon = this._cardElement.querySelector(".card__delete");
     this._cardImg.src = this._src;
     this._cardTitle = this._cardElement.querySelector(".card__title").innerText = this._name;
+    this._cardImg.alt = `Картинка ${this._cardTitle}`;
 
     this._setEventListeners();
 
@@ -47,5 +48,6 @@ export default class Card {
   // Метод удаления карточки
   _deleteCard(item) {
     item.remove();
+    item = null;
   }
 }

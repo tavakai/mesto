@@ -19,6 +19,9 @@ export const formEditProfile = document.querySelector(".popup__form_edit");
 // Привязка шаблона карточки
 export const cardTemplate = document.querySelector(".card_view-popup");
 
+// Вынесение в константу значение Escape
+export const btnEscape = "Escape";
+
 // Стартовый массив с карточками
 export const initialCards = [{
         name: "Архыз",

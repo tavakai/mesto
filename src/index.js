@@ -20,11 +20,13 @@ import {
   initialCards
 } from './utils/constants.js';
 
+// Экземпляр открытой карточки
+const popupCard = new PopupWithImage(openedCard);
+popupCard.setEventListeners();
+
 // Функция открытия карточки
 const handleCardClick = function (name, src) {
-  const popupCard = new PopupWithImage(openedCard);
   popupCard.openCard(name, src);
-  popupCard.setEventListeners();
 };
 
 const userDataObj = {
@@ -33,12 +35,18 @@ const userDataObj = {
 }
 const userInfo = new UserInfo(userDataObj);
 
+// Функция создания карточки
+const renderNewCard = function(itemCard, template, handle) {
+  const card = new Card(itemCard, template, handle);
+  return card;
+}
+
 // Генерация стартовых карточек
 const cardList = new Section({
   items: initialCards,
   renderer: (item) => {
-    const card = new Card(item, cardTemplate, handleCardClick);
-    const cardElement = card.createCard();
+    const element = renderNewCard(item, cardTemplate, handleCardClick);
+    const cardElement = element.createCard();
     cardList.addItem(cardElement);
   }
 }, listCards);
@@ -58,18 +66,8 @@ const popupAddCard = new PopupWithForm(popupAdd, (inputsValues) => {
     name: inputsValues.card_title,
     link: inputsValues.card_img_url
   }
-  const obj = [];
-  obj.push(dataArr);
-
-  const newCard = new Section({
-    items: obj,
-    renderer: (item) => {
-      const card = new Card(item, cardTemplate, handleCardClick);
-      const addCard = card.createCard();
-      newCard.addItem(addCard);
-    }
-  }, listCards);
-  newCard.renderItems();
+  const element = renderNewCard(dataArr, cardTemplate, handleCardClick);
+  cardList.addItem(element.createCard());
   popupAddCard.close();
 });
 

@@ -66,6 +66,7 @@ export default class FormValidator {
       element.classList.remove(this._errorClass);
     })
     this._btnForm.classList.add(this._inactiveButtonClass);
+    this._doBtnValidation();
   }
   // Обработчики на поля форм
   _doInputsValidation() {

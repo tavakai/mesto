@@ -1,3 +1,7 @@
+import {
+  btnEscape
+} from '../utils/constants.js';
+
 export default class Popup {
   constructor(popupSelector) {
     this._popup = popupSelector;
@@ -30,7 +34,7 @@ export default class Popup {
   }
 
   _handleEscClose = (evt) => {
-    if (evt.code == "Escape") {
+    if (evt.code == btnEscape) {
       this.close();
     }
   }
