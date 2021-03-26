@@ -5,6 +5,10 @@ export default class PopupWithForm extends Popup {
     super(popupSelector);
     this._submitForm = submitForm;
     this._popupForm = this._popup.querySelector('.popup__form');
+    this._btnForms = this._popup.querySelector('.popup__button');
+    this._btnFormEdit = this._popup.querySelector('.popup__button_edit');
+    this._btnFormAdd = this._popup.querySelector('.popup__button_add');
+    this._btnFormAvatar = this._popup.querySelector('.popup__button_avatar');
   }
 
   _getInputValues() {
@@ -26,5 +30,13 @@ export default class PopupWithForm extends Popup {
   close() {
     super.close();
     this._popupForm.reset();
+  }
+  // Метод прелоадера
+  addPreloader(isLoading, text) {
+    if (isLoading) {
+      this._btnForms.textContent = 'Сохранение...';
+    } else {
+      this._btnForms.textContent = text;
+    }
   }
 }

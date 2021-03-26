@@ -13,7 +13,12 @@
   </header>
   <main class="content">
     <section class="profile">
-      <img src="./images/image.jpg" alt="Фото профиля" class="profile__img" />
+      <div class="profile__wrapper-img">
+        <img src="./images/image.jpg" alt="Фото профиля" class="profile__img" />
+        <div class="profile__wrapper-pencil">
+          <img src="./images/pencil.svg" alt="pencil" class="profile__pencil-icon">
+        </div>
+      </div>
       <div class="profile__info">
         <div class="profile__wrapper">
           <h1 class="profile__name" id="profile__name">Жак-Ив Кусто</h1>
@@ -70,6 +75,41 @@
       </form>
     </div>
   </section>
+  <!--Попап изменения аватарки -->
+  <section class="popup popup_avatar">
+    <div class="popup__container popup__container_width_240">
+      <form action="scripts/index.js" name="form-popup-avatar" method="get" class="popup__form popup__form_avatar" novalidate>
+        <fieldset class="popup__fieldset popup__fieldset_width_240">
+          <legend>
+            <h2 class="popup__title popup__title_align-left">Обновить аватар</h2>
+          </legend>
+          <input type="url" name="user_img_url" class="popup__input popup__input_value_img popup__input_width_200"
+            value="" required placeholder="Ссылка на картинку" />
+          <span class="popup__message popup__message_avatar_error" id="user_img_url-error"></span>
+          </fieldset>
+        <button class="popup__button popup__button_avatar popup__button_width_200 popup__button_disabled" disabled type="submit" value="Создать">
+          Сохранить
+        </button>
+        <button type="button" class="popup__close popup__close_btn_avatar"></button>
+      </form>
+    </div>
+  </section>
+  <!--Попап подтверждения -->
+  <section class="popup popup_confirm">
+    <div class="popup__container popup__container_width_240">
+      <form action="scripts/index.js" name="form-popup-confirm" method="get" class="popup__form popup__form_confirm" novalidate>
+        <fieldset class="popup__fieldset popup__fieldset_width_240">
+          <legend>
+            <h2 class="popup__title popup__title_align-left">Вы уверены?</h2>
+          </legend>
+          </fieldset>
+        <button class="popup__button popup__button_confirm popup__button_width_200" type="submit" value="Да">
+          Да
+        </button>
+        <button type="button" class="popup__close popup__close_btn_confirm"></button>
+      </form>
+    </div>
+  </section>
   <!--Попап просмотра карточки-->
   <section class="popup popup_card">
     <div class="popup__card">
@@ -85,7 +125,10 @@
       <button class="card__delete" type="button"></button>
       <div class="card__content">
         <h2 class="card__title"></h2>
-        <button type="button" class="card__button-like"></button>
+        <div class="card__likes">
+          <button type="button" class="card__button-like"></button>
+          <span class="card__like-quantity">1</span>
+        </div>
       </div>
     </div>
   </template>
