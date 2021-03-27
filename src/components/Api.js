@@ -16,11 +16,8 @@ export default class Api {
         headers: this.headers
       })
       .then((res) => {
-        return res.json()
+        return this._getResponseData(res)
       })
-      .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-      });
   }
   // Получить карточки
   getInitialCards() {
@@ -28,11 +25,7 @@ export default class Api {
         headers: this.headers
       })
       .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        // если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return this._getResponseData(res)
       });
   }
   // Изменить профиль пользователя
@@ -46,11 +39,7 @@ export default class Api {
         })
       })
       .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        // если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return this._getResponseData(res)
       })
   }
   // Заменить аватар
@@ -63,72 +52,58 @@ export default class Api {
         })
       })
       .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        // если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return this._getResponseData(res)
       })
   }
   // Добавить новый пост
   addPost(data) {
     return fetch(`${this.baseUrl}/cards`, {
-      method: 'POST',
-      headers: this.headers,
-      body: JSON.stringify({
-        name: data.name,
-        link: data.link
+        method: 'POST',
+        headers: this.headers,
+        body: JSON.stringify({
+          name: data.name,
+          link: data.link
+        })
       })
-    })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+      .then(res => {
+        return this._getResponseData(res)
+      })
   }
   // Постановка лайка
   addLike(cardId) {
     return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
-      method: 'PUT',
-      headers: this.headers
-    })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+        method: 'PUT',
+        headers: this.headers
+      })
+      .then(res => {
+        return this._getResponseData(res)
+      })
   }
   // Снятие лайка
   removeLike(cardId) {
     return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
-      method: 'DELETE',
-      headers: this.headers
-    })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+        method: 'DELETE',
+        headers: this.headers
+      })
+      .then(res => {
+        return this._getResponseData(res)
+      })
   }
-
   // Удаление поста
   removePost(cardId) {
     return fetch(`${this.baseUrl}/cards/${cardId}`, {
-      method: 'DELETE',
-      headers: this.headers
-    })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+        method: 'DELETE',
+        headers: this.headers
+      })
+      .then(res => {
+        return this._getResponseData(res)
+      })
+  }
+  // Метод проверки ответа и преобразование в json
+  _getResponseData(response) {
+    if (!response.ok) {
+      return Promise.reject(`Ошибка: ${response.status}`);
+    }
+    return response.json();
   }
 }

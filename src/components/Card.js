@@ -4,7 +4,7 @@ export default class Card {
     handleCardClick,
     addLikeClick,
     handleDeleteIconClick,
-  },cardSelector, user) {
+  }, cardSelector, user) {
     this._name = data.name;
     this._src = data.link;
     this._owner = data.owner;
@@ -33,7 +33,7 @@ export default class Card {
     this._likes_quantity.textContent = this._likesCards.length;
     this._searchLikeInPosts();
     this.checkCart();
-    
+
     // Слушатель клика на картинку карточки
     this._cardImg.addEventListener('click', () => {
       this._handleCardClick(this._name, this._src);
@@ -43,13 +43,13 @@ export default class Card {
     this._cardLikeBtn.addEventListener("click", () => {
       this._addLikeClick(
         this._likesCards,
-        this._user._id, this._idCard, this._likes_quantity, this._toggleLike()
-        );
+        this._user._id, this._idCard, this._toggleLike()
+      );
     });
 
     // Слушатель для удаления карточки
     this._cardDeleteIcon.addEventListener("click", () => {
-      if(this.checkCart()) {
+      if (this.checkCart()) {
         this._handleDeleteIconClick(this._idCard, () => {
           this._deleteCard();
         });
@@ -60,13 +60,17 @@ export default class Card {
   }
   // Проверка наличия лайка во всех постах
   _searchLikeInPosts() {
-    if(this._likesCards.includes(this._user._id)) {
+    if (this._likesCards.includes(this._user._id)) {
       this._toggleLike();
-    } 
+    }
   }
-  // Добавление лайка на пост
+  // Окрашиваем лайк поста
   _toggleLike() {
     this._cardLikeBtn.classList.toggle("card__button-like_active");
+  }
+  // Счетчик лайка поста, получаем актуальные данные от сервера
+  likeAmount(data) {
+    this._likes_quantity.textContent = data.likes.length;
   }
   // Метод удаления карточки из DOM
   _deleteCard() {
@@ -75,7 +79,7 @@ export default class Card {
   }
   // Проверка автора поста, ставим иконку удаления
   checkCart() {
-    if(this._owner._id == this._user._id) {
+    if (this._owner._id == this._user._id) {
       this._cardDeleteIcon.classList.add("card__delete_show");
       return true;
     }

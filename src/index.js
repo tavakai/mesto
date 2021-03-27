@@ -33,10 +33,19 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 });
-// Запрос информации о пользователе
-api.getUserProfile().then((res) => {
-  user.setUserInfo(res);
-})
+
+// Получаем данные юзера
+// Далее отрисовываем карточки
+api.getAllData()
+  .then((values) => { //попадаем сюда, когда оба промиса будут выполнены
+    const [userData, cards] = values;
+    user.setUserInfo(userData);
+    cards.reverse();
+    cardList.renderItems(cards);
+  })
+  .catch((err) => { //попадаем сюда если один из промисов завершится ошибкой
+    console.log(`Ошибка: ${err}`);
+  })
 
 // Экземпляр открытой карточки
 const popupCard = new PopupWithImage(openedCard);
@@ -59,7 +68,7 @@ const renderNewCard = function (cardData) {
       // Открытия карточки
       popupCard.openCard(title, src);
     },
-    addLikeClick: (arrayLikes, userId, cardId, likeQount) => {
+    addLikeClick: (arrayLikes, userId, cardId) => {
       // Удаление лайка, если уже стоит лайк
       // Создаем массив лайкнувших
       let arrayLikesPosts = arrayLikes;
@@ -69,20 +78,19 @@ const renderNewCard = function (cardData) {
             if (userIndex > -1) {
               arrayLikesPosts.splice(userIndex, 1)
             }
-            console.log(arrayLikesPosts);
-            likeQount.textContent = res.likes.length;
+            card.likeAmount(res);
           })
           .catch(err => {
-            console.log(err);
+            console.log(`Ошибка: ${err}`);
           })
       } else {
         // Постановка лайка
         api.addLike(cardId).then((res) => {
             arrayLikesPosts.push(userId);
-            likeQount.textContent = res.likes.length;
+            card.likeAmount(res);
           })
           .catch(err => {
-            console.log(err);
+            console.log(`Ошибка: ${err}`);
           })
       }
     },
@@ -92,12 +100,10 @@ const renderNewCard = function (cardData) {
       popupDelete.createSubmit(() => {
         api.removePost(cardId).then(() => {
             removeCard();
+            popupDelete.close();
           })
           .catch(err => {
-            console.log(err);
-          })
-          .finally(() => {
-            popupDelete.close();
+            console.log(`Ошибка: ${err}`);
           })
       })
     }
@@ -116,23 +122,17 @@ const cardList = new Section({
   }
 }, listCards);
 
-// Рендерим все карточки при загрузки страницы
-api.getInitialCards().then((res) => {
-  res.reverse();
-  cardList.renderItems(res);
-})
-
 // Создание экземпляра попапа редактирования + описываем коллбэк
 const popupEditPopup = new PopupWithForm(popupEdit, (inputsValues) => {
   popupEditPopup.addPreloader(true);
   api.doChangeUserInfo(inputsValues).then(res => {
       user.setUserInfo(res);
+      popupEditPopup.close();
     })
     .catch((err) => {
       return console.log(`Ошибка: ${err}`)
     })
     .finally(() => {
-      popupEditPopup.close();
       popupEditPopup.addPreloader(false, 'Сохранить');
     })
 });
@@ -148,12 +148,12 @@ const popupAddCard = new PopupWithForm(popupAdd, (inputsValues) => {
   api.addPost(dataArr).then((res) => {
       const element = renderNewCard(res);
       cardList.addItem(element.createCard());
+      popupAddCard.close();
     })
     .catch((err) => {
       return console.log(`Ошибка: ${err}`)
     })
     .finally(() => {
-      popupAddCard.close();
       popupAddCard.addPreloader(false, 'Создать');
     })
 });
@@ -178,7 +178,6 @@ btnAddOpenPopup.addEventListener('click', () => {
 // Экземпляр для попапа аватарки + описываем коллбэк
 const popupAvatarEdit = new PopupWithForm(popupAvatar, (inputsValues) => {
   popupAvatarEdit.addPreloader(true);
-  console.log(inputsValues);
   api.doChangeAvatar(inputsValues).then(res => {
       user.setUserInfo(res);
     })
