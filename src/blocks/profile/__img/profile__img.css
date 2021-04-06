@@ -4,4 +4,6 @@
     transition: visibility .1s linear,opacity .1s linear;
     opacity: 1;
     backface-visibility: hidden;
+    height: 120px;
+    object-fit: cover;
 }
